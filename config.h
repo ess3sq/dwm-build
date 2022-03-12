@@ -78,13 +78,23 @@ static const char *termcmd[]  = { "st", NULL };
 // static const char *termcmd[]  = { "gnome-terminal", NULL };
 
 // Custom apps/commands/hotkeys
-static const char  *firefoxcmd[] = { "/usr/bin/firefox",  NULL };
+// static const char  *firefoxcmd[] = { "/usr/bin/firefox",  NULL };
 static const char  *bravecmd[] = { "/usr/bin/brave-browser",  NULL };
 static const char  *emacscmd[] = { "/usr/bin/emacs",  NULL };
+
 static const char  *slockcmd[] = { "/usr/local/bin/slock",  NULL };
 static const char  *shutdowncmd[] = { "/home/lorenzo/bin/shutdown-now",  NULL };
+
 static const char  *volumelevelcmd[] = { "python3",  "/home/lorenzo/bin/volume_level.py", NULL };
-static const char  *wifistrengthcmd[] = { "python3",  "/home/lorenzo/bin/wifi_strength.py", NULL };
+static const char  *volumeup[] = { "amixer",  "set", "Master", "3+", NULL };
+static const char  *volumedown[] = { "amixer",  "set", "Master", "3-", NULL };
+static const char  *volumetoggle[] = { "amixer",  "-D", "pulse", "set", "Master", "toggle", NULL };
+
+static const char  *brightup[] = { "xbacklight",  "-inc", "5",  NULL };
+static const char  *brightdown[] = { "xbacklight",  "-dec", "5",  NULL };
+static const char  *brightmax[] = { "xbacklight",  "-set", "100",  NULL };
+
+static const char  *wifistrengthcmd[] = { "python3",  "/home/lorenzo/bin/wifi_strength.py", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -129,10 +139,20 @@ static Key keys[] = {
 	//	{ MODKEY,                       XK_w,      spawn,          {.v = firefoxcmd} },
 	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd} },
 	{ MODKEY,                       XK_e,      spawn,          {.v = emacscmd} },
+
 	{ MODKEY,                       XK_x,      spawn,          {.v = slockcmd} },
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v = shutdowncmd} },
 	{ MODKEY,                       XK_v,      spawn,          {.v = volumelevelcmd} },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = wifistrengthcmd} },
+	
+	{ MODKEY,                       XK_F12,    spawn,          {.v = volumeup} },
+	{ MODKEY,                       XK_F11,    spawn,          {.v = volumedown} },
+	{ MODKEY,                       XK_F10,    spawn,          {.v = volumetoggle} },
+
+	{ MODKEY,                       XK_F6,     spawn,          {.v = brightup} },
+	{ MODKEY,                       XK_F5,     spawn,          {.v = brightdown} },
+	{ MODKEY,                       XK_F7,     spawn,          {.v = brightmax} },
+
 };
 
 /* button definitions */
