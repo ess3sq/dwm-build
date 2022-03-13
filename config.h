@@ -80,7 +80,10 @@ static const char *termcmd[]  = { "st", NULL };
 // Custom apps/commands/hotkeys
 // static const char  *firefoxcmd[] = { "/usr/bin/firefox",  NULL };
 static const char  *bravecmd[] = { "/usr/bin/brave-browser",  NULL };
+static const char  *surfcmd[] = { "/home/lorenzo/bin/surf-open.sh",  NULL };
 static const char  *emacscmd[] = { "/usr/bin/emacs",  NULL };
+static const char  *nautiluscmd[] = { "/usr/bin/nautilus",  NULL };
+static const char  *screenshotcmd[] = { "/usr/bin/gnome-screenshot",  "-i", NULL };
 
 static const char  *slockcmd[] = { "/usr/local/bin/slock",  NULL };
 static const char  *shutdowncmd[] = { "/home/lorenzo/bin/shutdown-now",  NULL };
@@ -138,13 +141,17 @@ static Key keys[] = {
 	// Apps
 	//	{ MODKEY,                       XK_w,      spawn,          {.v = firefoxcmd} },
 	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd} },
+	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = surfcmd} },
 	{ MODKEY,                       XK_e,      spawn,          {.v = emacscmd} },
+	{ MODKEY,                       XK_o,      spawn,          {.v = nautiluscmd} },
+	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = screenshotcmd} },
 
-	{ MODKEY,                       XK_x,      spawn,          {.v = slockcmd} },
-	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v = shutdowncmd} },
 	{ MODKEY,                       XK_v,      spawn,          {.v = volumelevelcmd} },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = wifistrengthcmd} },
-	
+
+	{ MODKEY,                       XK_F1,     spawn,          {.v = slockcmd} },
+	{ MODKEY|ShiftMask,             XK_F1,     spawn,          {.v = shutdowncmd} },
+
 	{ MODKEY,                       XK_F12,    spawn,          {.v = volumeup} },
 	{ MODKEY,                       XK_F11,    spawn,          {.v = volumedown} },
 	{ MODKEY,                       XK_F10,    spawn,          {.v = volumetoggle} },
