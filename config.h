@@ -34,13 +34,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",				NULL,       NULL,       0,            1,           -1 },
-	{ "Emacs",				NULL,       NULL,       1 << 7,       0,           -1 },
-	{ "Firefox",			NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "Brave",				NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "jetbrains-idea",		NULL,       NULL,       1 << 7,       0,           -1 },
-	{ "jetbrains-clion",	NULL,       NULL,       1 << 7,       0,           -1 },
+	/* class                  instance    title       tags mask     isfloating   monitor */
+	{ "Gimp",				  NULL,       NULL,       0,            1,           -1 },
+	{ "Emacs",				  NULL,       NULL,       1 << 7,       0,           -1 },
+	{ "Firefox",			  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Brave",				  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "jetbrains-idea",		  NULL,       NULL,       1 << 7,       0,           -1 },
+	{ "jetbrains-clion",	  NULL,       NULL,       1 << 7,       0,           -1 },
+	{ "Thunderbird",	      NULL,       NULL,       1 << 6,       0,           -1 },
 };
 
 /* layout(s) */
@@ -80,10 +81,12 @@ static const char *termcmd[]  = { "st", NULL };
 // Custom apps/commands/hotkeys
 // static const char  *firefoxcmd[] = { "/usr/bin/firefox",  NULL };
 static const char  *bravecmd[] = { "/usr/bin/brave-browser",  NULL };
-static const char  *surfcmd[] = { "/home/lorenzo/bin/surf-open.sh",  NULL };
+//static const char  *surfcmd[] = { "/home/lorenzo/bin/surf-open.sh",  NULL };
+static const char  *surfcmd[] = { "/home/lorenzo/bin/open-web",  NULL };
 static const char  *emacscmd[] = { "/usr/bin/emacs",  NULL };
 static const char  *nautiluscmd[] = { "/usr/bin/nautilus",  NULL };
 static const char  *screenshotcmd[] = { "/usr/bin/gnome-screenshot",  "-i", NULL };
+static const char  *thunderbirdcmd[] = { "/usr/bin/thunderbird", NULL };
 
 static const char  *slockcmd[] = { "/usr/local/bin/slock",  NULL };
 static const char  *shutdowncmd[] = { "/home/lorenzo/bin/shutdown-now",  NULL };
@@ -145,6 +148,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_e,      spawn,          {.v = emacscmd} },
 	{ MODKEY,                       XK_o,      spawn,          {.v = nautiluscmd} },
 	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = screenshotcmd} },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = thunderbirdcmd} },
 
 	{ MODKEY,                       XK_v,      spawn,          {.v = volumelevelcmd} },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = wifistrengthcmd} },
@@ -160,6 +164,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F5,     spawn,          {.v = brightdown} },
 	{ MODKEY,                       XK_F7,     spawn,          {.v = brightmax} },
 
+	{ MODKEY,                       XK_Up,     focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_Down,   focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_Left,   setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_Right,  setmfact,       {.f = +0.05} },
 };
 
 /* button definitions */
