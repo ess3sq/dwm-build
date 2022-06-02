@@ -111,6 +111,7 @@ static const char  *suspendcmd[] = {"systemctl", "suspend", NULL };
 static const char  *shutdowncmd[] = { "/home/lorenzo/bin/shutdown-now",  NULL };
 static const char  *gamescmd[] = {"game-launcher.sh", NULL};
 static const char  *docscmd[] = {"open_doc.sh", NULL};
+static const char  *nmtuicmd[] = {"st", "-e", "nmtui", NULL};
 
 static const char  *volumelevelcmd[] = { "python3",  "/home/lorenzo/bin/volume_level.py", NULL };
 static const char  *volumeup[] = { "amixer",  "set", "Master", "3+", NULL };
@@ -206,6 +207,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_o,      spawn,          {.v = nautiluscmd} },
 	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = screenshotcmd} },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = thunderbirdcmd} },
+	{ MODKEY,                       XK_y,      spawn,          {.v = nmtuicmd} },
 
 	{ MODKEY,                       XK_v,      spawn,          {.v = volumelevelcmd} },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = wifistrengthcmd} },
