@@ -1,8 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 6;        /* border pixel of windows */
-static const unsigned int gappx     = 12;        /* gaps between windows */
+static const unsigned int borderpx  = 4;        /* border pixel of windows */
+static const unsigned int gappx     = 15;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -160,83 +160,86 @@ void open_web(const Arg *arg) {
 }
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = configscmd } },
- 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_i,      setcfact,       {.f = +0.25} },
-	{ MODKEY|ShiftMask,             XK_d,      setcfact,       {.f = -0.25} },
-	{ MODKEY|ShiftMask,             XK_r,      setcfact,       {.f =  0.00} },
-
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-
-	{ MODKEY,                       XK_x,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[3]} }, // centeredmaster
-	{ MODKEY|ShiftMask,             XK_c,      setlayout,      {.v = &layouts[4]} }, // centeredfloatingmaster
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY,                       XK_q,      spawn,          {.v = systemcmd} },
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	/* modifier                     key             function        argument */
+	{ MODKEY,                       XK_p,           spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_p,           spawn,          {.v = configscmd } },
+ 	{ MODKEY|ShiftMask,             XK_Return,      spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_b,           togglebar,      {0} },
+	{ MODKEY,                       XK_j,           focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_k,           focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_i,           incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_d,           incnmaster,     {.i = -1 } },
+     
+	{ MODKEY,                       XK_h,           setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_l,           setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_i,           setcfact,       {.f = +0.25} },
+	{ MODKEY|ShiftMask,             XK_d,           setcfact,       {.f = -0.25} },
+	{ MODKEY|ShiftMask,             XK_r,           setcfact,       {.f =  0.00} },
+     
+	{ MODKEY,                       XK_Return,      zoom,           {0} },
+	{ MODKEY,                       XK_Tab,         view,           {0} },
+     
+	{ MODKEY,                       XK_x,           killclient,     {0} },
+	{ MODKEY,                       XK_t,           setlayout,      {.v = &layouts[0]} },
+    { MODKEY,                       XK_f,           setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,           setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_c,           setlayout,      {.v = &layouts[3]} }, // centeredmaster
+	{ MODKEY|ShiftMask,             XK_c,           setlayout,      {.v = &layouts[4]} }, // centeredfloatingmaster
+	{ MODKEY,                       XK_space,       setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_space,       togglefloating, {0} },
+	{ MODKEY,                       XK_0,           view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_0,           tag,            {.ui = ~0 } },
+	{ MODKEY,                       XK_comma,       focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_period,      focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,       tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period,      tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_numbersign,  setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_numbersign,  setgaps,        {.i = 0  } },
+	
+	TAGKEYS(                        XK_1,                           0)
+	TAGKEYS(                        XK_2,                           1)
+	TAGKEYS(                        XK_3,                           2)
+	TAGKEYS(                        XK_4,                           3)
+	TAGKEYS(                        XK_5,                           4)
+	TAGKEYS(                        XK_6,                           5)
+	TAGKEYS(                        XK_7,                           6)
+	TAGKEYS(                        XK_8,                           7)
+	TAGKEYS(                        XK_9,                           8)
+	{ MODKEY,                       XK_q,      spawn,               {.v = systemcmd} },
+	{ MODKEY|ShiftMask,             XK_q,      quit,                {0} },
 
 	// Apps
 	//	{ MODKEY,                       XK_w,      spawn,          {.v = firefoxcmd} },
-	{ MODKEY,                       XK_w,      open_web,       {.ui = 1 << 8} },
-	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = surfcmd} },
-	{ MODKEY,                       XK_s,      spawn,          {.v = surfbookcmd} },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = surfhistcmd} },
-	{ MODKEY,                       XK_e,      open_emacs,     {.ui = 1 << 7} },
-	{ MODKEY,                       XK_o,      spawn,          {.v = nautiluscmd} },
-	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = screenshotcmd} },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = thunderbirdcmd} },
-	{ MODKEY,                       XK_y,      spawn,          {.v = nmtuicmd} },
-
-	{ MODKEY,                       XK_v,      spawn,          {.v = volumelevelcmd} },
-	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = wifistrengthcmd} },
-
-	{ MODKEY,                       XK_F1,     suspend,        {.v = NULL} },
-	{ MODKEY|ShiftMask,             XK_F1,     spawn,          {.v = shutdowncmd} },
-	{ MODKEY,                       XK_g,      spawn,          {.v = gamescmd} },
-	{ MODKEY|ShiftMask,             XK_g,      spawn,          {.v = docscmd} },
-	
-	{ MODKEY,                       XK_F12,    spawn,          {.v = volumeup} },
-	{ MODKEY,                       XK_F11,    spawn,          {.v = volumedown} },
-	{ MODKEY,                       XK_F10,    spawn,          {.v = volumetoggle} },
-
-	{ MODKEY,                       XK_F6,     spawn,          {.v = brightup} },
-	{ MODKEY,                       XK_F5,     spawn,          {.v = brightdown} },
-	{ MODKEY,                       XK_F7,     spawn,          {.v = brightmax} },
-
-	{ MODKEY,                       XK_Up,     focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_Down,   focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_Left,   setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_Right,  setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_w,      open_web,            {.ui = 1 << 8} },
+	{ MODKEY|ShiftMask,             XK_w,      spawn,               {.v = surfcmd} },
+	{ MODKEY,                       XK_s,      spawn,               {.v = surfbookcmd} },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,               {.v = surfhistcmd} },
+	{ MODKEY,                       XK_e,      open_emacs,          {.ui = 1 << 7} },
+	{ MODKEY,                       XK_o,      spawn,               {.v = nautiluscmd} },
+	{ MODKEY|ShiftMask,             XK_o,      spawn,               {.v = screenshotcmd} },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,               {.v = thunderbirdcmd} },
+	{ MODKEY,                       XK_y,      spawn,               {.v = nmtuicmd} },
+     
+	{ MODKEY,                       XK_v,      spawn,               {.v = volumelevelcmd} },
+	{ MODKEY|ShiftMask,             XK_v,      spawn,               {.v = wifistrengthcmd} },
+     
+	{ MODKEY,                       XK_F1,     suspend,             {.v = NULL} },
+	{ MODKEY|ShiftMask,             XK_F1,     spawn,               {.v = shutdowncmd} },
+	{ MODKEY,                       XK_g,      spawn,               {.v = gamescmd} },
+	{ MODKEY|ShiftMask,             XK_g,      spawn,               {.v = docscmd} },
+	     
+	{ MODKEY,                       XK_F12,    spawn,               {.v = volumeup} },
+	{ MODKEY,                       XK_F11,    spawn,               {.v = volumedown} },
+	{ MODKEY,                       XK_F10,    spawn,               {.v = volumetoggle} },
+     
+	{ MODKEY,                       XK_F6,     spawn,               {.v = brightup} },
+	{ MODKEY,                       XK_F5,     spawn,               {.v = brightdown} },
+	{ MODKEY,                       XK_F7,     spawn,               {.v = brightmax} },
+     
+	{ MODKEY,                       XK_Up,     focusstack,          {.i = -1 } },
+	{ MODKEY,                       XK_Down,   focusstack,          {.i = +1 } },
+	{ MODKEY,                       XK_Left,   setmfact,            {.f = -0.05} },
+	{ MODKEY,                       XK_Right,  setmfact,            {.f = +0.05} },
 };
 
 /* button definitions */
