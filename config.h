@@ -15,7 +15,7 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
+static const int showsystray        = 0;     /* 0 means no systray */
 
 static const char *fonts[]          = { "SF Mono:style=Light:size=14", "monospace:size=14", "Symbola:size=14" };
 static const char dmenufont[]       = "monospace:size=14";
@@ -34,14 +34,37 @@ static const char col_oxfordblue[]    = "#0B2545";
 static const char col_bloodred[]      = "#5A1807";
 static const char col_ocrered[]       = "#55251D";
 static const char col_spaceblue[]     = "#283044";
-static const char * const col_main = col_oxfordblue;
+
+static const char * const col_main = col_spaceblue;
+
+// Hikers palette https://coolors.co/ffbe0b-fb5607-ff006e-8338ec-3a86ff
 
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
+	//               fg         bg         border   
+	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]  = { col_gray4, col_main,  col_main  },
+	
+	[SchemeStatus]    = { col_gray3, "#0D2E35",        "#15242B"  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]   = { col_gray4, "#56986E",        "#15242B"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]  = { col_gray3, "#15242B",        "#15242B"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]   = { col_gray4, "#1D4E43",        "#15242B"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]  = { col_gray3, "#15242B",        "#15242B"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+};
+
+/*
+static const char *colors[][3]      = {
+	//               fg         bg         border   
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	//	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 	[SchemeSel]  = { col_gray4, col_main,  col_main  },
+	
+	[SchemeStatus]    = { col_gray3, col_ocrered,      col_gray2  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]   = { col_gray4, col_bloodred,     col_gray2  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]  = { col_gray3, col_gray1,        col_gray2  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]   = { col_gray4, col_main,         col_gray2  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]  = { col_gray3, col_gray1,        col_gray2  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
+*/
 
 /* tagging */
 static const char *tags[] = { "⛺", "2", "3", "🎧", "🎮", "💬", "📂", "💻", "🌐" };
