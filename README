@@ -7,6 +7,8 @@ Requirements
 ------------
 In order to build dwm you need the Xlib header files.
 
+NOTE: For my build you also need the SF Mono font (and friends), get it from the AUR as `nerd-fonts-sf-mono`.
+
 
 Installation
 ------------
