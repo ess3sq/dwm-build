@@ -8,8 +8,8 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 48;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 
-static const int vertpad            = 0; //10;       /* vertical padding of bar */
-static const int sidepad            = 0; //10;       /* horizontal padding of bar */
+static const int vertpad            = 10;       /* vertical padding of bar */
+static const int sidepad            = 10;       /* horizontal padding of bar */
 
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -17,8 +17,8 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 
-static const char *fonts[]          = { "SF Mono:style=Light:size=14", "monospace:size=14", "Symbola:size=14" };
-static const char dmenufont[]       = "monospace:size=14";
+static const char *fonts[]          = { "SF Mono:style=Light:size=12", "monospace:size=12", "Symbola:size=12" };
+static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -74,19 +74,19 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class                          instance    title               tags mask     isfloating   monitor */
-	{ "Emacs",				          NULL,       NULL,               1 << 7,       0,           -1 },
-	{ "Firefox",			          NULL,       NULL,               1 << 8,       0,           -1 },
-	{ "Brave",				          NULL,       NULL,               1 << 8,       0,           -1 },
-	{ "jetbrains-idea",		          NULL,       NULL,               1 << 7,       0,           -1 },
-	{ "jetbrains-clion",	          NULL,       NULL,               1 << 7,       0,           -1 },
-	{ "Thunderbird",	              NULL,       NULL,               1 << 5,       0,           -1 },
-	{ "discord",     	              NULL,       NULL,               1 << 5,       0,           -1 },
-	{ NULL,          	              NULL,       "Spotify",          1 << 5,       0,           -1 },
-	{ "org.remmina.Remmina",          NULL,       "Remmina Remote",   0,            0,           -1 }, // remote machine selection
-	//	{ "org.remmina.Remmina",  NULL,       "Remmina",          1 << 1,       0,           -1 }, // remote machine window
-	{ "org.remmina.Remmina",          NULL,       "newraider",        1 << 1,       0,           -1 }, // newraider window
-	{ "com.cisco.anyconnect.gui",     NULL,       NULL,               0,            1,           -1 },
+	/* class                          instance    title                          tags mask     isfloating   monitor */
+	{ "Emacs",				          NULL,       NULL,                          1 << 7,       0,           -1 },
+	{ "Firefox",			          NULL,       NULL,                          1 << 8,       0,           -1 },
+	{ "Brave",				          NULL,       NULL,                          1 << 8,       0,           -1 },
+	{ "jetbrains-idea",		          NULL,       NULL,                          1 << 7,       0,           -1 },
+	{ "jetbrains-clion",	          NULL,       NULL,                          1 << 7,       0,           -1 },
+	{ "Thunderbird",	              NULL,       NULL,                          1 << 5,       0,           -1 },
+	{ "discord",     	              NULL,       NULL,                          1 << 5,       0,           -1 },
+	{ "com.cisco.anyconnect.gui",     NULL,       NULL,                          0,            1,           -1 },
+	{ NULL,                           NULL,       "Steam - News",                1 << 4,       1,           -1 },
+	{ NULL,                           NULL,       "Steam",                       1 << 4,       0,           -1 },
+	{ NULL,                           NULL,       "Rockstar Games Launcher",     1 << 4,       1,           -1 },
+	{ NULL,                           NULL,       "Futter",                      0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -122,37 +122,39 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_main, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 // static const char *termcmd[]  = { "gnome-terminal", NULL };
-static const char *configscmd[] = {"config-edit.sh", NULL};
+//static const char *configscmd[] = {"config-edit.sh", NULL};
 
 // Custom apps/commands/hotkeys
-// static const char  *firefoxcmd[] = { "/usr/bin/firefox",  NULL };
-static const char  *bravecmd[] = { "/usr/bin/brave-browser",  NULL };
+static const char  *firefoxcmd[] = { "/usr/bin/firefox",  NULL };
+static const char  *bravecmd[] = { "/usr/bin/brave",  NULL };
 //static const char  *surfcmd[] = { "/home/lorenzo/bin/surf-open.sh",  NULL };
-static const char  *surfcmd[] = { "surf",  NULL };
-static const char  *surfhistcmd[] = { "/home/lorenzo/bin/open-web-history",  NULL };
-static const char  *surfbookcmd[] = { "/home/lorenzo/bin/open-web",  NULL };
+//static const char  *surfcmd[] = { "surf",  NULL };
+//static const char  *surfhistcmd[] = { "/home/lorenzo/bin/open-web-history",  NULL };
+//static const char  *surfbookcmd[] = { "/home/lorenzo/bin/open-web",  NULL };
 
 static const char  *emacscmd[] = { "/usr/bin/emacs",  NULL };
 static const char  *nautiluscmd[] = { "/usr/bin/nautilus",  NULL };
-static const char  *screenshotcmd[] = { "/usr/bin/gnome-screenshot",  "-i", NULL };
-static const char  *thunderbirdcmd[] = { "/usr/bin/thunderbird", NULL };
+static const char  *screenshotcmd[] = { "/usr/bin/flameshot",  "gui", NULL };
+// static const char  *thunderbirdcmd[] = { "/usr/bin/thunderbird", NULL };
 
 static const char  *slockcmd[] = { "/usr/local/bin/slock",  NULL };
 static const char  *systemcmd[] = { "/home/lorenzo/bin/system-control",  NULL };
 static const char  *suspendcmd[] = {"systemctl", "suspend", NULL };
 static const char  *shutdowncmd[] = { "/home/lorenzo/bin/shutdown-now",  NULL };
-static const char  *gamescmd[] = {"game-launcher.sh", NULL};
-static const char  *docscmd[] = {"open_doc.sh", NULL};
+//static const char  *gamescmd[] = {"game-launcher.sh", NULL};
+//static const char  *docscmd[] = {"open_doc.sh", NULL};
 static const char  *nmtuicmd[] = {"st", "-e", "nmtui", NULL};
 
-static const char  *volumelevelcmd[] = { "python3",  "/home/lorenzo/bin/volume_level.py", NULL };
-static const char  *volumeup[] = { "amixer",  "set", "Master", "3+", NULL };
-static const char  *volumedown[] = { "amixer",  "set", "Master", "3-", NULL };
+static const char  *volumelevelcmd[] = { "python3",  "/home/lori/scripts/volume_level.py", NULL };
+static const char  *volumeup[] = { "amixer",  "set", "Master", "5%+", NULL };
+static const char  *volumedown[] = { "amixer",  "set", "Master", "5%-", NULL };
 static const char  *volumetoggle[] = { "amixer",  "-D", "pulse", "set", "Master", "toggle", NULL };
 
-static const char  *brightup[] = { "xbacklight",  "-inc", "5",  NULL };
-static const char  *brightdown[] = { "xbacklight",  "-dec", "5",  NULL };
-static const char  *brightmax[] = { "xbacklight",  "-set", "100",  NULL };
+static const char  *spotifyplaypause[] = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
+
+//static const char  *brightup[] = { "xbacklight",  "-inc", "5",  NULL };
+//static const char  *brightdown[] = { "xbacklight",  "-dec", "5",  NULL };
+//static const char  *brightmax[] = { "xbacklight",  "-set", "100",  NULL };
 
 static const char  *wifistrengthcmd[] = { "python3",  "/home/lorenzo/bin/wifi_strength.py", NULL};
 
@@ -179,16 +181,18 @@ void open_emacs(const Arg *arg) {
 	switch_to_tag(arg);
 }
 
-void open_web(const Arg *arg) {
-	Arg bravearg = {.v = bravecmd};
-	spawn(&bravearg);
-	switch_to_tag(arg);
+#define WEB_TAG (1 << 8)
+
+void open_web(const Arg *cmdarg) {
+	Arg tagarg = { .ui = WEB_TAG };
+	spawn(cmdarg);
+	switch_to_tag(&tagarg);
 }
 
 static Key keys[] = {
 	/* modifier                     key             function        argument */
 	{ MODKEY,                       XK_p,           spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_p,           spawn,          {.v = configscmd } },
+	//	{ MODKEY|ShiftMask,             XK_p,           spawn,          {.v = configscmd } },
  	{ MODKEY|ShiftMask,             XK_Return,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,           togglebar,      {0} },
 	{ MODKEY,                       XK_j,           focusstack,     {.i = -1 } },
@@ -231,36 +235,37 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                           6)
 	TAGKEYS(                        XK_8,                           7)
 	TAGKEYS(                        XK_9,                           8)
-	{ MODKEY,                       XK_q,      spawn,               {.v = systemcmd} },
+	{ MODKEY,                       XK_q,      spawn,               {.v = systemcmd} }, // !
 	{ MODKEY|ShiftMask,             XK_q,      quit,                {0} },
 
 	// Apps
-	//	{ MODKEY,                       XK_w,      spawn,          {.v = firefoxcmd} },
-	{ MODKEY,                       XK_w,      open_web,            {.ui = 1 << 8} },
-	{ MODKEY|ShiftMask,             XK_w,      spawn,               {.v = surfcmd} },
-	{ MODKEY,                       XK_s,      spawn,               {.v = surfbookcmd} },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,               {.v = surfhistcmd} },
+	{ MODKEY|ShiftMask,             XK_w,      open_web,            {.v = firefoxcmd} },
+	{ MODKEY,                       XK_w,      open_web,            {.v = bravecmd} },
+	//	{ MODKEY|ShiftMask,             XK_w,      spawn,               {.v = surfcmd} },
+	// { MODKEY,                       XK_s,      spawn,               {.v = surfbookcmd} },
+	// { MODKEY|ShiftMask,             XK_s,      spawn,               {.v = surfhistcmd} },
 	{ MODKEY,                       XK_e,      open_emacs,          {.ui = 1 << 7} },
 	{ MODKEY,                       XK_o,      spawn,               {.v = nautiluscmd} },
-	{ MODKEY|ShiftMask,             XK_o,      spawn,               {.v = screenshotcmd} },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,               {.v = thunderbirdcmd} },
+	{ MODKEY|ShiftMask,             XK_o,      spawn,               {.v = screenshotcmd} }, // !
+	// { MODKEY|ShiftMask,             XK_e,      spawn,               {.v = thunderbirdcmd} },
 	{ MODKEY,                       XK_y,      spawn,               {.v = nmtuicmd} },
      
 	{ MODKEY,                       XK_v,      spawn,               {.v = volumelevelcmd} },
-	{ MODKEY|ShiftMask,             XK_v,      spawn,               {.v = wifistrengthcmd} },
+	{ MODKEY|ShiftMask,             XK_v,      spawn,               {.v = wifistrengthcmd} }, // !
      
 	{ MODKEY,                       XK_F1,     suspend,             {.v = NULL} },
 	{ MODKEY|ShiftMask,             XK_F1,     spawn,               {.v = shutdowncmd} },
-	{ MODKEY,                       XK_g,      spawn,               {.v = gamescmd} },
-	{ MODKEY|ShiftMask,             XK_g,      spawn,               {.v = docscmd} },
+	// { MODKEY,                       XK_g,      spawn,               {.v = gamescmd} },
+	// { MODKEY|ShiftMask,             XK_g,      spawn,               {.v = docscmd} },
 	     
-	{ MODKEY,                       XK_F12,    spawn,               {.v = volumeup} },
-	{ MODKEY,                       XK_F11,    spawn,               {.v = volumedown} },
-	{ MODKEY,                       XK_F10,    spawn,               {.v = volumetoggle} },
+	{ MODKEY,                       XK_Prior,  spawn,               {.v = volumeup} },
+	{ MODKEY,                       XK_Next,   spawn,               {.v = volumedown} },
+	{ MODKEY,                       XK_Pause,  spawn,               {.v = volumetoggle} },
+	{ MODKEY|ShiftMask,             XK_Pause,  spawn,               {.v = spotifyplaypause} },
      
-	{ MODKEY,                       XK_F6,     spawn,               {.v = brightup} },
-	{ MODKEY,                       XK_F5,     spawn,               {.v = brightdown} },
-	{ MODKEY,                       XK_F7,     spawn,               {.v = brightmax} },
+	// { MODKEY,                       XK_F6,     spawn,               {.v = brightup} },
+	// { MODKEY,                       XK_F5,     spawn,               {.v = brightdown} },
+	// { MODKEY,                       XK_F7,     spawn,               {.v = brightmax} },
      
 	{ MODKEY,                       XK_Up,     focusstack,          {.i = -1 } },
 	{ MODKEY,                       XK_Down,   focusstack,          {.i = +1 } },
