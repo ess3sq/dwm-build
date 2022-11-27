@@ -4,6 +4,7 @@
 static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 48;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
@@ -74,19 +75,23 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class                          instance    title                          tags mask     isfloating   monitor */
-	{ "Emacs",				          NULL,       NULL,                          1 << 7,       0,           -1 },
-	{ "Firefox",			          NULL,       NULL,                          1 << 8,       0,           -1 },
-	{ "Brave",				          NULL,       NULL,                          1 << 8,       0,           -1 },
-	{ "jetbrains-idea",		          NULL,       NULL,                          1 << 7,       0,           -1 },
-	{ "jetbrains-clion",	          NULL,       NULL,                          1 << 7,       0,           -1 },
-	{ "Thunderbird",	              NULL,       NULL,                          1 << 5,       0,           -1 },
-	{ "discord",     	              NULL,       NULL,                          1 << 5,       0,           -1 },
-	{ "com.cisco.anyconnect.gui",     NULL,       NULL,                          0,            1,           -1 },
-	{ NULL,                           NULL,       "Steam - News",                1 << 4,       1,           -1 },
-	{ NULL,                           NULL,       "Steam",                       1 << 4,       0,           -1 },
-	{ NULL,                           NULL,       "Rockstar Games Launcher",     1 << 4,       1,           -1 },
-	{ NULL,                           NULL,       "Futter",                      0,            1,           -1 },
+	// swallow: -1 -> swallow, 0 -> ?, 1 -> never(maybe?)
+	/* class                          instance    title                          tags mask     isfloating   isterminal   noswallow   monitor */
+	{ "Emacs",				          NULL,       NULL,                          1 << 7,       0,           0,          -1,          -1 },
+	{ "Firefox",			          NULL,       NULL,                          1 << 8,       0,           0,          -1,          -1 },
+	{ "Brave",				          NULL,       NULL,                          1 << 8,       0,           0,          -1,          -1 },
+	{ "jetbrains-idea",		          NULL,       NULL,                          1 << 7,       0,           0,          -1,          -1 },
+	{ "jetbrains-clion",	          NULL,       NULL,                          1 << 7,       0,           0,          -1,          -1 },
+	{ "Thunderbird",	              NULL,       NULL,                          1 << 5,       0,           0,           0,          -1 },
+	{ "discord",     	              NULL,       NULL,                          1 << 5,       0,           0,           0,          -1 },
+	{ "com.cisco.anyconnect.gui",     NULL,       NULL,                          0,            1,           0,           0,          -1 },
+	{ NULL,                           NULL,       "Steam - News",                1 << 4,       1,           0,           0,          -1 },
+	{ NULL,                           NULL,       "Steam",                       1 << 4,       0,           0,           0,          -1 },
+	{ NULL,                           NULL,       "Rockstar Games Launcher",     1 << 4,       1,           0,           0,          -1 },
+	{ NULL,                           NULL,       "Futter",                      0,            1,           0,           0,          -1 },
+	{ NULL,                           NULL,       "Event Tester",                0,            0,           0,           1,          -1 },
+	{ "org.pwmt.zathura",             NULL,       NULL,                          0,            0,           0,          -1,          -1 },
+	{ "st",                           NULL,       NULL,                          0,            0,           1,           0,          -1 },
 };
 
 /* layout(s) */
