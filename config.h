@@ -18,7 +18,7 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 
-static const char *fonts[]          = { "SF Mono:style=Light:size=12", "monospace:size=12", "Symbola:size=12" };
+static const char *fonts[]          = { "JetBrainsMono-Regular:style=Light:size=12", "monospace:size=12", "Symbola:size=12" };
 static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
