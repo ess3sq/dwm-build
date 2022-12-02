@@ -2872,7 +2872,7 @@ main(int argc, char *argv[])
 	run();
 	cleanup();
 	XCloseDisplay(dpy);
-	return EXIT_SUCCESS;
+	return full_quit_flag ? -1 : EXIT_SUCCESS;
 }
 
 void

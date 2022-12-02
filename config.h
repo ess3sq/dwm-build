@@ -19,7 +19,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 
 static const char *fonts[]          = { "JetBrainsMono-Regular:style=Light:size=12", "monospace:size=12", "Symbola:size=12" };
-static const char dmenufont[]       = "monospace:size=12";
+static const char dmenufont[]       = "monospace:size=14";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -194,6 +194,13 @@ void open_web(const Arg *cmdarg) {
 	switch_to_tag(&tagarg);
 }
 
+int full_quit_flag = 0;
+void quit_fully(const Arg *a) {
+	(void) a;
+	full_quit_flag = 1;
+	quit(NULL);
+}
+
 static Key keys[] = {
 	/* modifier                     key             function        argument */
 	{ MODKEY,                       XK_p,           spawn,          {.v = dmenucmd } },
@@ -220,9 +227,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,           setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_c,           setlayout,      {.v = &layouts[3]} }, // centeredmaster
 	{ MODKEY|ShiftMask,             XK_c,           setlayout,      {.v = &layouts[4]} }, // centeredfloatingmaster
-	{ MODKEY,                       XK_space,       setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,       togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_f,           togglefullscr,  {0} },
+	//	{ MODKEY,                       XK_space,       setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_f,           togglefloating, {0} },
+	{ MODKEY,                       XK_space,       togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,           view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,           tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,       focusmon,       {.i = -1 } },
@@ -230,7 +237,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,       tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,      tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_numbersign,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_numbersign,  setgaps,        {.i = 0  } },
+	{ MODKEY|ShiftMask,             XK_numbersign,  setgaps,        {.i = -1  } },
 	
 	TAGKEYS(                        XK_1,                           0)
 	TAGKEYS(                        XK_2,                           1)
@@ -241,8 +248,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                           6)
 	TAGKEYS(                        XK_8,                           7)
 	TAGKEYS(                        XK_9,                           8)
-	{ MODKEY,                       XK_q,      spawn,               {.v = systemcmd} }, // !
-	{ MODKEY|ShiftMask,             XK_q,      quit,                {0} },
+	{ MODKEY,                       XK_Escape,      quit_fully,     {0} }, // Quit DWM
+	{ MODKEY|ShiftMask,             XK_Escape,      quit,           {0} }, // Restart DWM
+	{ MODKEY,                       XK_q,           spawn,          {.v = systemcmd} }, // System options
 
 	// Apps
 	{ MODKEY|ShiftMask,             XK_w,      open_web,            {.v = firefoxcmd} },
