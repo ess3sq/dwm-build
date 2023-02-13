@@ -68,7 +68,7 @@ static const char *colors[][3]      = {
 */
 
 /* tagging */
-static const char *tags[] = { "⛺", "2", "3", "🎧", "🎮", "💬", "📂", "💻", "🌐" };
+static const char *tags[] = { "⛺", "⚙", "📖", "🎧", "🎮", "💬", "📂", "💻", "🌐" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -92,6 +92,7 @@ static const Rule rules[] = {
 	{ NULL,                           NULL,       "Event Tester",                0,            0,           0,           1,          -1 },
 	{ "org.pwmt.zathura",             NULL,       NULL,                          0,            0,           0,          -1,          -1 },
 	{ "st",                           NULL,       NULL,                          0,            0,           1,           0,          -1 },
+	{ "Deadbeef",               "deadbeef",       NULL,                          1 << 3,       1,           0,          -1,          -1 },
 };
 
 /* layout(s) */
@@ -273,7 +274,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Down,                        focusstack,          {.i = +1 } },
 	{ MODKEY,                       XK_Left,                        setmfact,            {.f = -0.05} },
 	{ MODKEY,                       XK_Right,                       setmfact,            {.f = +0.05} },
-};
+}; // end kbds
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
