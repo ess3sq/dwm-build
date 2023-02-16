@@ -4,7 +4,7 @@
 static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
+static const int swallowfloating    = 1;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 48;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
@@ -92,7 +92,8 @@ static const Rule rules[] = {
 	{ NULL,                           NULL,       "Event Tester",                0,            0,           0,           1,          -1 },
 	{ "org.pwmt.zathura",             NULL,       NULL,                          0,            0,           0,          -1,          -1 },
 	{ "st",                           NULL,       NULL,                          0,            0,           1,           0,          -1 },
-	{ "Deadbeef",               "deadbeef",       NULL,                          1 << 3,       1,           0,          -1,          -1 },
+	{ "Deadbeef",               "deadbeef",       NULL,                          1 << 3,       1,           0,           0,          -1 },
+	{ "Pcmanfm",                 "pcmanfm",       NULL,                          0,            1,           0,           0,          -1 },
 };
 
 /* layout(s) */
@@ -137,7 +138,7 @@ static const char  *firefoxcmd[] = { "/usr/bin/firefox",  NULL };
 static const char  *bravecmd[] = { "/usr/bin/brave",  NULL };
 
 static const char  *emacscmd[] = { "/usr/bin/emacs",  NULL };
-static const char  *nautiluscmd[] = { "/usr/bin/nautilus",  NULL };
+static const char  *pcmanfmcmd[] = { "/usr/bin/pcmanfm",  NULL };
 static const char  *screenshotcmd[] = { "/usr/bin/flameshot",  "gui", NULL };
 
 static const char  *slockcmd[] = { "/usr/local/bin/slock",  NULL };
@@ -201,79 +202,79 @@ void quit_fully(const Arg *a) {
 
 static Key keys[] = {
 	/* modifier                     key                             function        argument */
-	{ MODKEY,                       XK_p,                           spawn,          {.v = dmenucmd } },
- 	{ MODKEY|ShiftMask,             XK_Return,                      spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_dead_circumflex,             togglescratch,  {.v = scratchpadcmd } },	
-	{ MODKEY,                       XK_b,                           togglebar,      {0} },
-	{ MODKEY,                       XK_j,                           focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_k,                           focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_i,                           incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,                           incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_p,                           spawn,          {.v = dmenucmd } }, // Run the dmenu launcher
+ 	{ MODKEY|ShiftMask,             XK_Return,                      spawn,          {.v = termcmd } }, // Run st
+	{ MODKEY,                       XK_dead_circumflex,             togglescratch,  {.v = scratchpadcmd } }, // Toggle scratchpad
+	{ MODKEY,                       XK_b,                           togglebar,      {0} }, // Toggle bar
+	{ MODKEY,                       XK_j,                           focusstack,     {.i = -1 } }, // Move up the stack
+	{ MODKEY,                       XK_k,                           focusstack,     {.i = +1 } }, // Move down the stack
+	{ MODKEY,                       XK_i,                           incnmaster,     {.i = +1 } }, // Increase master positions
+	{ MODKEY,                       XK_d,                           incnmaster,     {.i = -1 } }, // Decrease master positions
                      
-	{ MODKEY,                       XK_h,                           setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,                           setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_i,                           setcfact,       {.f = +0.25} },
-	{ MODKEY|ShiftMask,             XK_d,                           setcfact,       {.f = -0.25} },
-	{ MODKEY|ShiftMask,             XK_r,                           setcfact,       {.f =  0.00} },
+	{ MODKEY,                       XK_h,                           setmfact,       {.f = -0.05} }, // Move master-stack barrier to the left
+	{ MODKEY,                       XK_l,                           setmfact,       {.f = +0.05} }, // Move master-stack barrier to the right
+	{ MODKEY|ShiftMask,             XK_i,                           setcfact,       {.f = +0.25} }, // Increase height of window in the stack
+	{ MODKEY|ShiftMask,             XK_d,                           setcfact,       {.f = -0.25} }, // Decrease height of window in the stack
+	{ MODKEY|ShiftMask,             XK_r,                           setcfact,       {.f =  0.00} }, // Reset height of window in the stack
                      
-	{ MODKEY,                       XK_Return,                      zoom,               {0} },
-	{ MODKEY,                       XK_Tab,                         view,               {0} },
-	{ MODKEY,                       XK_z,                           toggleAttachBelow,  {0} },
+	{ MODKEY,                       XK_Return,                      zoom,               {0} }, // Toggle to/from the master window
+	{ MODKEY,                       XK_Tab,                         view,               {0} }, // Switch to previous tag
+	{ MODKEY,                       XK_z,                           toggleAttachBelow,  {0} }, // Toggle attachbelow behaviour
                      
-	{ MODKEY,                       XK_x,                           killclient,     {0} },
-	{ MODKEY,                       XK_t,                           setlayout,      {.v = &layouts[0]} },
-    { MODKEY,                       XK_f,                           setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,                           setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_c,                           setlayout,      {.v = &layouts[3]} }, // centeredmaster
-	{ MODKEY|ShiftMask,             XK_c,                           setlayout,      {.v = &layouts[4]} }, // centeredfloatingmaster
-	//	{ MODKEY,                       XK_space,                       setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_f,                           togglefloating, {0} },
-	{ MODKEY,                       XK_space,                       togglefullscr,  {0} },
-	{ MODKEY,                       XK_0,                           view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,                           tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,                       focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period,                      focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,                       tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period,                      tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_numbersign,                  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_numbersign,                  setgaps,        {.i = -1  } },
+	{ MODKEY,                       XK_x,                           killclient,     {0} }, // Kill window
+	{ MODKEY,                       XK_t,                           setlayout,      {.v = &layouts[0]} }, // Switch to tiling layout
+    { MODKEY,                       XK_f,                           setlayout,      {.v = &layouts[1]} }, // Switch to floating layout
+	{ MODKEY,                       XK_m,                           setlayout,      {.v = &layouts[2]} }, // Switch to monocle layout
+	{ MODKEY,                       XK_c,                           setlayout,      {.v = &layouts[3]} }, // Switch to centered master layout
+	{ MODKEY|ShiftMask,             XK_c,                           setlayout,      {.v = &layouts[4]} }, // Switch to centered floating master layout
+
+	{ MODKEY|ShiftMask,             XK_f,                           togglefloating, {0} }, // Toggle floating behaviour for the focused window
+	{ MODKEY,                       XK_space,                       togglefullscr,  {0} }, // Toggle fullscreen for the focused window
+	{ MODKEY,                       XK_0,                           view,           {.ui = ~0 } }, // Show all tags
+	{ MODKEY|ShiftMask,             XK_0,                           tag,            {.ui = ~0 } }, // Share  window with all tags
+	//	{ MODKEY,                       XK_comma,                       focusmon,       {.i = -1 } },
+	//	{ MODKEY,                       XK_period,                      focusmon,       {.i = +1 } },
+	//	{ MODKEY|ShiftMask,             XK_comma,                       tagmon,         {.i = -1 } },
+	//	{ MODKEY|ShiftMask,             XK_period,                      tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_numbersign,                  setgaps,        {.i = +1 } }, // Increase gap size by 1px
+	{ MODKEY|ShiftMask,             XK_numbersign,                  setgaps,        {.i = -1  } }, // Decrease gap size by 1px
 	
-	TAGKEYS(                        XK_1,                           0)
-	TAGKEYS(                        XK_2,                           1)
-	TAGKEYS(                        XK_3,                           2)
-	TAGKEYS(                        XK_4,                           3)
-	TAGKEYS(                        XK_5,                           4)
-	TAGKEYS(                        XK_6,                           5)
-	TAGKEYS(                        XK_7,                           6)
-	TAGKEYS(                        XK_8,                           7)
-	TAGKEYS(                        XK_9,                           8)
+	TAGKEYS(                        XK_1,                           0) // Switch to tag 0
+	TAGKEYS(                        XK_2,                           1) // Switch to tag 1
+	TAGKEYS(                        XK_3,                           2) // Switch to tag 2
+	TAGKEYS(                        XK_4,                           3) // Switch to tag 3
+	TAGKEYS(                        XK_5,                           4) // Switch to tag 4
+	TAGKEYS(                        XK_6,                           5) // Switch to tag 5
+	TAGKEYS(                        XK_7,                           6) // Switch to tag 6
+	TAGKEYS(                        XK_8,                           7) // Switch to tag 7
+	TAGKEYS(                        XK_9,                           8) // Switch to tag 8
 	{ MODKEY,                       XK_Escape,                      quit_fully,     {0} }, // Quit DWM
 	{ MODKEY|ShiftMask,             XK_Escape,                      quit,           {0} }, // Restart DWM
-	{ MODKEY,                       XK_q,                           spawn,          {.v = systemcmd} }, // System options
+	{ MODKEY,                       XK_q,                           spawn,          {.v = systemcmd} }, // Show system power options
 
 	// Apps
-	{ MODKEY|ShiftMask,             XK_w,                           open_web,            {.v = firefoxcmd} },
-	{ MODKEY,                       XK_w,                           open_web,            {.v = bravecmd} },
-	{ MODKEY,                       XK_e,                           open_emacs,          {.ui = 1 << 7} },
-	{ MODKEY,                       XK_o,                           spawn,               {.v = nautiluscmd} },
-	{ MODKEY|ShiftMask,             XK_o,                           spawn,               {.v = screenshotcmd} }, // !
-	{ MODKEY,                       XK_y,                           spawn,               {.v = nmtuicmd} },
+	{ MODKEY|ShiftMask,             XK_w,                           open_web,            {.v = firefoxcmd} }, // Run firefox and switch to the web tag
+	{ MODKEY,                       XK_w,                           open_web,            {.v = bravecmd} }, // Run brave and switch to the web tag
+	{ MODKEY,                       XK_e,                           open_emacs,          {.ui = 1 << 7} }, // Run emacs and switch to the dev tag
+	{ MODKEY,                       XK_o,                           spawn,               {.v = pcmanfmcmd} }, // Open the file manager
+	{ MODKEY|ShiftMask,             XK_o,                           spawn,               {.v = screenshotcmd} }, // Run the screenshot utility
+	{ MODKEY,                       XK_y,                           spawn,               {.v = nmtuicmd} }, // Open the network/wifi manager
                           
-	{ MODKEY,                       XK_v,                           spawn,               {.v = volumelevelcmd} },
-	{ MODKEY|ShiftMask,             XK_v,                           spawn,               {.v = wifistrengthcmd} }, // !
+	{ MODKEY,                       XK_v,                           spawn,               {.v = volumelevelcmd} }, // Show current audio volume level
+	{ MODKEY|ShiftMask,             XK_v,                           spawn,               {.v = wifistrengthcmd} }, // Show current network connection
                           
-	{ MODKEY,                       XK_F1,                          suspend,             {.v = NULL} },
-	{ MODKEY|ShiftMask,             XK_F1,                          spawn,               {.v = shutdowncmd} },
+	{ MODKEY,                       XK_F1,                          suspend,             {.v = NULL} }, // Suspend
+	{ MODKEY|ShiftMask,             XK_F1,                          spawn,               {.v = shutdowncmd} }, // Shutdown
 	                          
-	{ MODKEY,                       XK_Prior,                       spawn,               {.v = volumeup} },
-	{ MODKEY,                       XK_Next,                        spawn,               {.v = volumedown} },
-	{ MODKEY,                       XK_Pause,                       spawn,               {.v = volumetoggle} },
-	{ MODKEY|ShiftMask,             XK_Pause,                       spawn,               {.v = spotifyplaypause} },
+	{ MODKEY,                       XK_Prior,                       spawn,               {.v = volumeup} }, // Increase audio volume level
+	{ MODKEY,                       XK_Next,                        spawn,               {.v = volumedown} }, // Decrease audio volume level
+	{ MODKEY,                       XK_Pause,                       spawn,               {.v = volumetoggle} }, // Toggle audio mute
+	{ MODKEY|ShiftMask,             XK_Pause,                       spawn,               {.v = spotifyplaypause} }, // Play/pause spotify tracks
           
-	{ MODKEY,                       XK_Up,                          focusstack,          {.i = -1 } },
-	{ MODKEY,                       XK_Down,                        focusstack,          {.i = +1 } },
-	{ MODKEY,                       XK_Left,                        setmfact,            {.f = -0.05} },
-	{ MODKEY,                       XK_Right,                       setmfact,            {.f = +0.05} },
+	{ MODKEY,                       XK_Up,                          focusstack,          {.i = -1 } }, // Move up the stack
+	{ MODKEY,                       XK_Down,                        focusstack,          {.i = +1 } }, // Move down the stack
+	{ MODKEY,                       XK_Left,                        setmfact,            {.f = -0.05} }, // Move master-stack barrier to the left
+	{ MODKEY,                       XK_Right,                       setmfact,            {.f = +0.05} }, // Move master-stack barrier to the right
 }; // end kbds
 
 /* button definitions */
