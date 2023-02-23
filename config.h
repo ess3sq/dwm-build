@@ -154,7 +154,8 @@ static const char  *volumeup[] = { "amixer",  "set", "Master", "5%+", NULL };
 static const char  *volumedown[] = { "amixer",  "set", "Master", "5%-", NULL };
 static const char  *volumetoggle[] = { "amixer",  "-D", "pulse", "set", "Master", "toggle", NULL };
 
-static const char  *spotifyplaypause[] = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
+//static const char  *spotifyplaypause[] = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
+static const char  *spotifyctlcmd[] = { "/home/lorenzo/bin/spotify-control.sh", NULL };
 
 //static const char  *brightup[] = { "xbacklight",  "-inc", "5",  NULL };
 //static const char  *brightdown[] = { "xbacklight",  "-dec", "5",  NULL };
@@ -269,7 +270,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Prior,                       spawn,               {.v = volumeup} }, // Increase audio volume level
 	{ MODKEY,                       XK_Next,                        spawn,               {.v = volumedown} }, // Decrease audio volume level
 	{ MODKEY,                       XK_Pause,                       spawn,               {.v = volumetoggle} }, // Toggle audio mute
-	{ MODKEY|ShiftMask,             XK_Pause,                       spawn,               {.v = spotifyplaypause} }, // Play/pause spotify tracks
+	{ MODKEY|ShiftMask,             XK_Pause,                       spawn,               {.v = spotifyctlcmd} }, // Control spotify playback
           
 	{ MODKEY,                       XK_Up,                          focusstack,          {.i = -1 } }, // Move up the stack
 	{ MODKEY,                       XK_Down,                        focusstack,          {.i = +1 } }, // Move down the stack
