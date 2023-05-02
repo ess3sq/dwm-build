@@ -6,7 +6,7 @@ static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 48;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 46;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
@@ -17,7 +17,7 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 
-static const char *fonts[]          = { "JetBrainsMono-Regular:style=Light:size=12", "monospace:size=12", "Symbola:size=12" };
+static const char *fonts[]          = { "JetBrainsMono-Regular:style=Light:size=11", "monospace:size=11", "Symbola:size=11" };
 static const char dmenufont[]       = "monospace:size=14";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -39,16 +39,21 @@ static const char * const col_main = col_spaceblue;
 
 // Hikers palette https://coolors.co/ffbe0b-fb5607-ff006e-8338ec-3a86ff
 
+#define DARK_TURQUOISE "#0D2E35"
+#define VERY_DARK_TURQUOISE "#15242B"
+#define LIGHT_GREEN "#56986E"
+#define DARK_GREEN "#1D4E43"
+
 static const char *colors[][3]      = {
 	//               fg         bg         border   
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_main,  col_main  },
 	
-	[SchemeStatus]    = { col_gray3, "#0D2E35",        "#15242B"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]   = { col_gray4, "#56986E",        "#15242B"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm]  = { col_gray3, "#15242B",        "#15242B"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]   = { col_gray4, "#1D4E43",        "#15242B"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]  = { col_gray3, "#15242B",        "#15242B"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeStatus]    = { col_gray3, VERY_DARK_TURQUOISE,        VERY_DARK_TURQUOISE  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]   = { col_gray4, LIGHT_GREEN,                VERY_DARK_TURQUOISE  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]  = { col_gray3, VERY_DARK_TURQUOISE,        VERY_DARK_TURQUOISE  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]   = { col_gray4, DARK_TURQUOISE,             VERY_DARK_TURQUOISE  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]  = { col_gray3, VERY_DARK_TURQUOISE,        VERY_DARK_TURQUOISE  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 /*
