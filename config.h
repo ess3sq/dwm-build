@@ -205,6 +205,10 @@ void quit_fully(const Arg *a) {
 	quit(NULL);
 }
 
+void killclientpid(const Arg *a) {
+	(void) system("kill -9 `xdotool getwindowfocus getwindowpid`");
+}
+
 static Key keys[] = {
 	/* modifier                     key                             function        argument */
 	{ MODKEY,                       XK_p,                           spawn,          {.v = dmenucmd } }, // Run the dmenu launcher
@@ -227,6 +231,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_z,                           toggleAttachBelow,  {0} }, // Toggle attachbelow behaviour
                      
 	{ MODKEY,                       XK_x,                           killclient,     {0} }, // Kill window
+	{ MODKEY|ShiftMask,             XK_x,                           killclientpid,  {0} }, // Kill window
 	{ MODKEY,                       XK_t,                           setlayout,      {.v = &layouts[0]} }, // Switch to tiling layout
     { MODKEY,                       XK_f,                           setlayout,      {.v = &layouts[1]} }, // Switch to floating layout
 	{ MODKEY,                       XK_m,                           setlayout,      {.v = &layouts[2]} }, // Switch to monocle layout
