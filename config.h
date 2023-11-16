@@ -223,36 +223,42 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,                           togglebar,      {0} }, // Toggle bar
 	{ MODKEY,                       XK_j,                           focusstack,     {.i = +1 } }, // Move up the stack
 	{ MODKEY,                       XK_k,                           focusstack,     {.i = -1 } }, // Move down the stack
+
 	{ MODKEY,                       XK_i,                           incnmaster,     {.i = +1 } }, // Increase master positions
 	{ MODKEY,                       XK_d,                           incnmaster,     {.i = -1 } }, // Decrease master positions
-                     
 	{ MODKEY,                       XK_h,                           focusmaster,    {0} }, // Focus master window
 	{ MODKEY,                       XK_l,                           focustopstack,  {0} }, // Focus stack window
-	{ MODKEY|ShiftMask,             XK_r,                           setcfact,       {.f =  0.00} }, // Reset height of window in the stack
-                     
 	{ MODKEY,                       XK_Return,                      zoom,               {0} }, // Toggle to/from the master window
-	{ MODKEY,                       XK_Tab,                         view,               {0} }, // Switch to previous tag
 	{ MODKEY,                       XK_z,                           toggleAttachBelow,  {0} }, // Toggle attachbelow behaviour
+
+	{ MODKEY|ShiftMask,             XK_r,                           setcfact,       {.f =  0.00} }, // Reset height of window in the stack
+	{ MODKEY,                       XK_Left,                        setmfact,            {.f = -0.05} }, // Move master-stack barrier to the left
+	{ MODKEY,                       XK_Right,                       setmfact,            {.f = +0.05} }, // Move master-stack barrier to the right
+	{ MODKEY,                       XK_Up,                          setcfact,            {.f = +0.25} }, // Increase height of window in the stack
+	{ MODKEY,                       XK_Down,                        setcfact,            {.f = -0.25} }, // Decrease height of window in the stack
                      
 	{ MODKEY,                       XK_x,                           killclient,     {0} }, // Kill window
 	{ MODKEY|ShiftMask,             XK_x,                           killclientpid,  {0} }, // Kill window
+																						   //
 	{ MODKEY,                       XK_t,                           setlayout,      {.v = &layouts[0]} }, // Switch to tiling layout
     { MODKEY,                       XK_f,                           setlayout,      {.v = &layouts[1]} }, // Switch to floating layout
 	{ MODKEY,                       XK_m,                           setlayout,      {.v = &layouts[2]} }, // Switch to monocle layout
 	{ MODKEY,                       XK_c,                           setlayout,      {.v = &layouts[3]} }, // Switch to centered master layout
 	{ MODKEY|ShiftMask,             XK_c,                           setlayout,      {.v = &layouts[4]} }, // Switch to centered floating master layout
-
 	{ MODKEY|ShiftMask,             XK_f,                           togglefloating, {0} }, // Toggle floating behaviour for the focused window
 	{ MODKEY,                       XK_space,                       togglefullscr,  {0} }, // Toggle fullscreen for the focused window
-	{ MODKEY,                       XK_0,                           view,           {.ui = ~0 } }, // Show all tags
-	{ MODKEY|ShiftMask,             XK_0,                           tag,            {.ui = ~0 } }, // Share  window with all tags
+
+	{ MODKEY,                       XK_numbersign,                  setgaps,        {.i = +1 } }, // Increase gap size by 1px
+	{ MODKEY|ShiftMask,             XK_numbersign,                  setgaps,        {.i = -1  } }, // Decrease gap size by 1px
+																					   //
 	//	{ MODKEY,                       XK_comma,                       focusmon,       {.i = -1 } },
 	//	{ MODKEY,                       XK_period,                      focusmon,       {.i = +1 } },
 	//	{ MODKEY|ShiftMask,             XK_comma,                       tagmon,         {.i = -1 } },
 	//	{ MODKEY|ShiftMask,             XK_period,                      tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_numbersign,                  setgaps,        {.i = +1 } }, // Increase gap size by 1px
-	{ MODKEY|ShiftMask,             XK_numbersign,                  setgaps,        {.i = -1  } }, // Decrease gap size by 1px
-	
+																					   //
+	{ MODKEY,                       XK_0,                           view,           {.ui = ~0 } }, // Show all tags
+	{ MODKEY|ShiftMask,             XK_0,                           tag,            {.ui = ~0 } }, // Share  window with all tags
+	{ MODKEY,                       XK_Tab,                         view,               {0} }, // Switch to previous tag
 	TAGKEYS(                        XK_1,                           0) // Switch to tag 0
 	TAGKEYS(                        XK_2,                           1) // Switch to tag 1
 	TAGKEYS(                        XK_3,                           2) // Switch to tag 2
@@ -262,6 +268,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                           6) // Switch to tag 6
 	TAGKEYS(                        XK_8,                           7) // Switch to tag 7
 	TAGKEYS(                        XK_9,                           8) // Switch to tag 8
+
 	{ MODKEY,                       XK_Escape,                      quit_fully,     {0} }, // Quit DWM
 	{ MODKEY|ShiftMask,             XK_Escape,                      quit,           {0} }, // Restart DWM
 	{ MODKEY,                       XK_q,                           spawn,          {.v = systemcmd} }, // Show system power options
@@ -277,8 +284,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_v,                           spawn,               {.v = volumelevelcmd} }, // Show current audio volume level
 	{ MODKEY|ShiftMask,             XK_v,                           spawn,               {.v = wifistrengthcmd} }, // Show current network connection
                           
-	{ MODKEY,                       XK_F1,                          suspend,             {.v = NULL} }, // Suspend
-	{ MODKEY|ShiftMask,             XK_F1,                          spawn,               {.v = shutdowncmd} }, // Shutdown
+	{ MODKEY,                       XK_End,                         suspend,             {.v = NULL} }, // Suspend
+	{ MODKEY|ShiftMask,             XK_End,                         spawn,               {.v = shutdowncmd} }, // Shutdown
 	                          
 	{ 0,                            XF86XK_AudioRaiseVolume,        spawn,               {.v = volumeup1} }, // Increase audio volume level
 	{ MODKEY,                       XK_Prior,                       spawn,               {.v = volumeup5} }, // Increase audio volume level
@@ -289,11 +296,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Pause,                       spawn,               {.v = spotifyctlcmd} }, // Control spotify playback
 	{ MODKEY,                       XK_Home,                        spawn,               {.v = spotifyctlcmd} },
           
-	{ MODKEY,                       XK_Left,                        setmfact,            {.f = -0.05} }, // Move master-stack barrier to the left
-	{ MODKEY,                       XK_Right,                       setmfact,            {.f = +0.05} }, // Move master-stack barrier to the right
-	{ MODKEY,                       XK_Up,                          setcfact,            {.f = +0.25} }, // Increase height of window in the stack
-	{ MODKEY,                       XK_Down,                        setcfact,            {.f = -0.25} }, // Decrease height of window in the stack
-
 	{ MODKEY,                       XK_r,                           spawn,               {.v = xrandrautocmd} },
 }; // end kbds
 
