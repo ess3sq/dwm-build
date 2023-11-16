@@ -80,24 +80,26 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	// swallow: -1 -> swallow, 0 -> ?, 1 -> never(maybe?)
-	/* class                          instance    title                          tags mask     isfloating   monitor */
-	{ "Emacs",				          NULL,       NULL,                          1 << 7,       0,           -1 },
-	{ "Firefox",			          NULL,       NULL,                          1 << 8,       0,           -1 },
-	{ "Brave",				          NULL,       NULL,                          1 << 8,       0,           -1 },
-	{ "jetbrains-idea",		          NULL,       NULL,                          1 << 7,       0,           -1 },
-	{ "jetbrains-clion",	          NULL,       NULL,                          1 << 7,       0,           -1 },
-	{ "Thunderbird",	              NULL,       NULL,                          1 << 5,       0,           -1 },
-	{ "discord",     	              NULL,       NULL,                          1 << 5,       0,           -1 },
-	{ "com.cisco.anyconnect.gui",     NULL,       NULL,                          0,            1,           -1 },
-	{ NULL,                           NULL,       "Steam - News",                1 << 4,       1,           -1 },
-	{ NULL,                           NULL,       "Steam",                       1 << 4,       0,           -1 },
-	{ NULL,                           NULL,       "Rockstar Games Launcher",     1 << 4,       1,           -1 },
-	{ NULL,                           NULL,       "Futter",                      0,            1,           -1 },
-	{ NULL,                           NULL,       "Event Tester",                0,            0,           -1 },
-	{ "org.pwmt.zathura",             NULL,       NULL,                          0,            0,           -1 },
-	{ "st",                           NULL,       NULL,                          0,            0,           -1 },
-	{ "Deadbeef",               "deadbeef",       NULL,                          1 << 3,       1,           -1 },
-	{ "Pcmanfm",                 "pcmanfm",       NULL,                          0,            1,           -1 },
+	/* class                          instance                   title                       tags mask     isfloating   monitor */
+	{ "Emacs",				          NULL,                      NULL,                       1 << 7,       0,           -1 },
+	{ "Firefox",			          NULL,                      NULL,                       1 << 8,       0,           -1 },
+	{ "Brave",				          NULL,                      NULL,                       1 << 8,       0,           -1 },
+	{ "jetbrains-idea",		          NULL,                      NULL,                       1 << 7,       0,           -1 },
+	{ "jetbrains-clion",	          NULL,                      NULL,                       1 << 7,       0,           -1 },
+	{ "Apache NetBeans IDE 16",		  "Apache NetBeans IDE 16",  NULL,                       1 << 7,       0,           -1 },
+	{ "Thunderbird",	              NULL,                      NULL,                       1 << 5,       0,           -1 },
+	{ "discord",     	              NULL,                      NULL,                       1 << 5,       0,           -1 },
+	{ "com.cisco.anyconnect.gui",     NULL,                      NULL,                       0,            1,           -1 },
+	{ NULL,                           NULL,                      "Steam - News",             1 << 4,       1,           -1 },
+	{ NULL,                           NULL,                      "Steam",                    1 << 4,       0,           -1 },
+	{ NULL,                           NULL,                      "Rockstar Games Launcher",  1 << 4,       1,           -1 },
+	{ NULL,                           NULL,                      "Futter",                   0,            1,           -1 },
+	{ NULL,                           NULL,                      "Event Tester",             0,            0,           -1 },
+	{ "org.pwmt.zathura",             NULL,                      NULL,                       0,            0,           -1 },
+	{ "st",                           NULL,                      NULL,                       0,            0,           -1 },
+	{ "Deadbeef",                     "deadbeef",                NULL,                       1 << 3,       1,           -1 },
+	{ "Pcmanfm",                      "pcmanfm",                 NULL,                       0,            1,           -1 },
+	{ "MEGAsync",                     "megasync",                NULL,                       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -154,8 +156,10 @@ static const char  *shutdowncmd[] = { "/home/lorenzo/bin/shutdown-now",  NULL };
 static const char  *nmtuicmd[] = {"st", "-e", "nmtui", NULL};
 
 static const char  *volumelevelcmd[] = { "python3",  "/home/lori/scripts/volume_level.py", NULL };
-static const char  *volumeup[] = { "amixer",  "set", "Master", "5%+", NULL };
-static const char  *volumedown[] = { "amixer",  "set", "Master", "5%-", NULL };
+static const char  *volumeup5[] = { "amixer",  "set", "Master", "5%+", NULL };
+static const char  *volumedown5[] = { "amixer",  "set", "Master", "5%-", NULL };
+static const char  *volumeup1[] = { "amixer",  "set", "Master", "5%+", NULL };
+static const char  *volumedown1[] = { "amixer",  "set", "Master", "1%-", NULL };
 static const char  *volumetoggle[] = { "amixer",  "-D", "pulse", "set", "Master", "toggle", NULL };
 
 //static const char  *spotifyplaypause[] = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
@@ -166,6 +170,8 @@ static const char  *spotifyctlcmd[] = { "/home/lorenzo/bin/spotify-control.sh", 
 //static const char  *brightmax[] = { "xbacklight",  "-set", "100",  NULL };
 
 static const char  *wifistrengthcmd[] = { "python3",  "/home/lorenzo/bin/wifi_strength.py", NULL};
+
+static const char *xrandrautocmd[] = {"xrandr", "--auto", NULL};
 
 void suspend(const Arg *nullarg) {
 	Arg slock = {.v = slockcmd};
@@ -215,15 +221,13 @@ static Key keys[] = {
  	{ MODKEY|ShiftMask,             XK_Return,                      spawn,          {.v = termcmd } }, // Run st
 	{ MODKEY,                       XK_dead_circumflex,             togglescratch,  {.v = scratchpadcmd } }, // Toggle scratchpad
 	{ MODKEY,                       XK_b,                           togglebar,      {0} }, // Toggle bar
-	{ MODKEY,                       XK_j,                           focusstack,     {.i = -1 } }, // Move up the stack
-	{ MODKEY,                       XK_k,                           focusstack,     {.i = +1 } }, // Move down the stack
+	{ MODKEY,                       XK_j,                           focusstack,     {.i = +1 } }, // Move up the stack
+	{ MODKEY,                       XK_k,                           focusstack,     {.i = -1 } }, // Move down the stack
 	{ MODKEY,                       XK_i,                           incnmaster,     {.i = +1 } }, // Increase master positions
 	{ MODKEY,                       XK_d,                           incnmaster,     {.i = -1 } }, // Decrease master positions
                      
-	{ MODKEY,                       XK_h,                           setmfact,       {.f = -0.05} }, // Move master-stack barrier to the left
-	{ MODKEY,                       XK_l,                           setmfact,       {.f = +0.05} }, // Move master-stack barrier to the right
-	{ MODKEY|ShiftMask,             XK_i,                           setcfact,       {.f = +0.25} }, // Increase height of window in the stack
-	{ MODKEY|ShiftMask,             XK_d,                           setcfact,       {.f = -0.25} }, // Decrease height of window in the stack
+	{ MODKEY,                       XK_h,                           focusmaster,    {0} }, // Focus master window
+	{ MODKEY,                       XK_l,                           focustopstack,  {0} }, // Focus stack window
 	{ MODKEY|ShiftMask,             XK_r,                           setcfact,       {.f =  0.00} }, // Reset height of window in the stack
                      
 	{ MODKEY,                       XK_Return,                      zoom,               {0} }, // Toggle to/from the master window
@@ -276,15 +280,21 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F1,                          suspend,             {.v = NULL} }, // Suspend
 	{ MODKEY|ShiftMask,             XK_F1,                          spawn,               {.v = shutdowncmd} }, // Shutdown
 	                          
-	{ MODKEY,                       XK_Prior,                       spawn,               {.v = volumeup} }, // Increase audio volume level
-	{ MODKEY,                       XK_Next,                        spawn,               {.v = volumedown} }, // Decrease audio volume level
+	{ 0,                            XF86XK_AudioRaiseVolume,        spawn,               {.v = volumeup1} }, // Increase audio volume level
+	{ MODKEY,                       XK_Prior,                       spawn,               {.v = volumeup5} }, // Increase audio volume level
+	{ 0,                            XF86XK_AudioLowerVolume,        spawn,               {.v = volumedown1} }, // Decrease audio volume level
+	{ MODKEY,                       XK_Next,                        spawn,               {.v = volumedown5} }, // Decrease audio volume level
 	{ MODKEY,                       XK_Pause,                       spawn,               {.v = volumetoggle} }, // Toggle audio mute
+	{ 0,                            XF86XK_AudioMute,               spawn,               {.v = volumetoggle} }, // Toggle audio mute
 	{ MODKEY|ShiftMask,             XK_Pause,                       spawn,               {.v = spotifyctlcmd} }, // Control spotify playback
+	{ MODKEY,                       XK_Home,                        spawn,               {.v = spotifyctlcmd} },
           
-	{ MODKEY,                       XK_Up,                          focusstack,          {.i = -1 } }, // Move up the stack
-	{ MODKEY,                       XK_Down,                        focusstack,          {.i = +1 } }, // Move down the stack
 	{ MODKEY,                       XK_Left,                        setmfact,            {.f = -0.05} }, // Move master-stack barrier to the left
 	{ MODKEY,                       XK_Right,                       setmfact,            {.f = +0.05} }, // Move master-stack barrier to the right
+	{ MODKEY,                       XK_Up,                          setcfact,            {.f = +0.25} }, // Increase height of window in the stack
+	{ MODKEY,                       XK_Down,                        setcfact,            {.f = -0.25} }, // Decrease height of window in the stack
+
+	{ MODKEY,                       XK_r,                           spawn,               {.v = xrandrautocmd} },
 }; // end kbds
 
 /* button definitions */

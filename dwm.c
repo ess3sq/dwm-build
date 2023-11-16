@@ -41,6 +41,7 @@
 #include <X11/extensions/Xinerama.h>
 #endif /* XINERAMA */
 #include <X11/Xft/Xft.h>
+#include <X11/XF86keysym.h>
 
 #include "drw.h"
 #include "util.h"
@@ -195,6 +196,8 @@ static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
+static void focusmaster(const Arg *arg);
+static void focustopstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
@@ -998,6 +1001,37 @@ focusstack(const Arg *arg)
 		focus(c);
 		restack(selmon);
 	}
+}
+
+void
+focusmaster(const Arg *ignored)
+{
+	Client *c = selmon->clients;
+	if (!c) return;
+
+	for (int n = 0; n < selmon->nmaster && c; ++n) {
+		if (c == selmon->sel) return;
+		c = c->next;
+	}
+	focus(selmon->clients);
+}
+
+void focustopstack(const Arg *ignored)
+{
+	if (!selmon->sel)
+		return;
+
+	Client *c = selmon->clients;
+	int currentlymaster = 0;
+
+	for (int n = 0; n < selmon->nmaster && c; ++n) {
+		if (c == selmon->sel)
+			currentlymaster = 1;
+		c = c->next;
+	}
+
+	if (currentlymaster)
+		focus(c);
 }
 
 Atom
