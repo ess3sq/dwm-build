@@ -1006,14 +1006,15 @@ focusstack(const Arg *arg)
 void
 focusmaster(const Arg *ignored)
 {
-	Client *c = selmon->clients;
-	if (!c) return;
+	int n = 0;
+	Client *c;
+	
+	if (!selmon->clients) return;
 
-	for (int n = 0; n < selmon->nmaster && c; ++n) {
+	for (n = 0, c = nexttiled(selmon->clients); c && n < selmon->nmaster; c = nexttiled(c->next), ++n) {
 		if (c == selmon->sel) return;
-		c = c->next;
 	}
-	focus(selmon->clients);
+	focus(nexttiled(selmon->clients));
 }
 
 void focustopstack(const Arg *ignored)
@@ -1021,13 +1022,13 @@ void focustopstack(const Arg *ignored)
 	if (!selmon->sel)
 		return;
 
-	Client *c = selmon->clients;
+	Client *c;
 	int currentlymaster = 0;
 
-	for (int n = 0; n < selmon->nmaster && c; ++n) {
+	int n;
+	for (n = 0, c = nexttiled(selmon->clients); c && n < selmon->nmaster; c = nexttiled(c->next), ++n) {
 		if (c == selmon->sel)
 			currentlymaster = 1;
-		c = c->next;
 	}
 
 	if (currentlymaster)
