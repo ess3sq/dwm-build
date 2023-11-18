@@ -116,6 +116,7 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 	{ "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster },
+	{ NULL,       NULL },
 };
 
 /* key definitions */
@@ -247,7 +248,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_c,                           setlayout,      {.v = &layouts[4]} }, // Switch to centered floating master layout
 	{ MODKEY|ShiftMask,             XK_f,                           togglefloating, {0} }, // Toggle floating behaviour for the focused window
 	{ MODKEY,                       XK_space,                       togglefullscr,  {0} }, // Toggle fullscreen for the focused window
-
+	{ MODKEY|ShiftMask,             XK_comma,                       cyclelayout,    {.i = -1 } },
+	{ MODKEY,                       XK_comma,                       cyclelayout,    {.i = +1 } },
+ 
 	{ MODKEY,                       XK_numbersign,                  setgaps,        {.i = +1 } }, // Increase gap size by 1px
 	{ MODKEY|ShiftMask,             XK_numbersign,                  setgaps,        {.i = -1  } }, // Decrease gap size by 1px
 																					   //
