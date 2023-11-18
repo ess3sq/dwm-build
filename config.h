@@ -16,6 +16,7 @@ static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corne
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
+static const unsigned int cursorwarp = 1;
 
 static const char *fonts[]          = { "UbuntuMonoNerdFont-Regular:size=13", "Unifont:size=13", "JetBrainsMono-Regular:style=Light:size=11", "monospace:size=11", "Symbola:size=11" };
 static const char dmenufont[]       = "UbuntuMonoNerdFont-Regular:size=15";
