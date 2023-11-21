@@ -1037,6 +1037,7 @@ focusmaster(const Arg *ignored)
 		if (c == selmon->sel) return;
 	}
 	focus(nexttiled(selmon->clients));
+	restack(selmon);
 }
 
 void focustopstack(const Arg *ignored)
@@ -1053,8 +1054,10 @@ void focustopstack(const Arg *ignored)
 			currentlymaster = 1;
 	}
 
-	if (currentlymaster)
+	if (currentlymaster) {
 		focus(c);
+		restack(selmon);
+	}
 }
 
 Atom
