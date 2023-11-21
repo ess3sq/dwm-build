@@ -2860,25 +2860,34 @@ centeredfloatingmaster(Monitor *m)
 		my = myo = (m->wh - mh) / 2;
 	} else {
 		/* go fullscreen if all clients are in the master area */
-		mh = m->wh;
-		mw = m->ww;
-		mx = mxo = 0;
-		my = myo = 0;
+		mh = m->wh - 2*m->gappx;
+		mw = m->ww - 2*m->gappx;
+		mx = mxo = m->gappx;
+		my = myo = m->gappx;
 	}
 
-	for(i = tx = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
-	if (i < m->nmaster) {
-		/* nmaster clients are stacked horizontally, in the center
-		 * of the screen */
-		w = (mw + mxo - mx) / (MIN(n, m->nmaster) - i);
-		resize(c, m->wx + mx, m->wy + my, w - (2*c->bw),
-		       mh - (2*c->bw), 0);
-		mx += WIDTH(c);
-	} else {
-		/* stack clients are stacked horizontally */
-		w = (m->ww - tx) / (n - i);
-		resize(c, m->wx + tx, m->wy, w - (2*c->bw),
-		       m->wh - (2*c->bw), 0);
-		tx += WIDTH(c);
+	unsigned backpadding = m->gappx / 2;
+	unsigned frontpadding = m->gappx - backpadding;
+
+	for(i = tx = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+		if (i < m->nmaster) {
+			/* nmaster clients are stacked horizontally, in the center
+			 * of the screen */
+			w = (mw + mxo - mx) / (MIN(n, m->nmaster) - i);
+//			resize(c, m->wx + mx + i*frontpadding,                    m->wy + my,
+//					  w - (2*c->bw) - ((i+1)%m->nmaster)*backpadding, mh - (2*c->bw),
+//			mx += WIDTH(c);
+			resize(c, m->wx + mx,                    m->wy + my,
+					  w - (2*c->bw), mh - (2*c->bw),
+					0);
+			mx += WIDTH(c) + m->gappx;
+		} else {
+			/* stack clients are stacked horizontally */
+			w = (m->ww - tx - m->gappx) / (n - i);
+			resize(c, m->wx + tx + m->gappx,    m->wy + m->gappx,
+					  w - (2*c->bw) - m->gappx, m->wh - (2*c->bw) - 2*m->gappx,
+					  0);
+			tx += WIDTH(c) + m->gappx;
+		}
 	}
 }
